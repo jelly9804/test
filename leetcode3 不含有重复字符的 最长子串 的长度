@@ -1,0 +1,48 @@
+这里用的方法是设立一个flag，作为最长字符串的开始，然后让i 一直遍历，到出现相同的字符串，就把flag移动到相同字符串的下一个index，接着再继续遍历。
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int flag = 0;
+        int max = 1;
+        
+        
+        //这里要注意，因为下面的temp字符串使用的substring可能会因为s的长度 <= 1 而报错。
+        if (s.length() == 0 || s.length() == 1) return s.length();
+    
+    
+    //这里temp的起始就是第一个字母
+        String temp = s.substring(flag,flag + 1);
+        
+        
+        //开始遍历，从index == 1 开始
+        for(int i=1;i < s.length();i++){
+        
+        //如果存在相同的字符串
+            if(temp.indexOf(s.charAt(i)) != -1){
+            
+            //max为目前的max和目前的字符串中的最大值
+                max = Math.max(max,i - flag);
+                
+                // flag也要重新定位到相同字符的下一位，这里注意原始的flag的值也要加上，不然index就少了。
+                flag = flag + temp.indexOf(s.charAt(i)) + 1;
+                
+                //temp也更新为flag到i的字符串
+                temp = s.substring(flag,i+1);
+            }else{
+            
+            
+            //没有相同的话，temp 增加此时的i 的字符
+                temp = s.substring(flag,i+1);
+                
+                //这里注意也要更新max，不然如 ‘aw’ 这样的例子会被漏掉导致max输出为1；
+                max = Math.max(max,i+1 - flag);
+            }
+        }
+        return max;
+    }
+}
+
+//如何在android studio中debug ？
+https://blog.csdn.net/jgw2008/article/details/120139547
+
+然后创建一个class，最后在main class里面new 这个class 并且运气其方法即可。
