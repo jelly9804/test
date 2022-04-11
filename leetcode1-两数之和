@@ -1,13 +1,19 @@
 class Solution {
     public int[] twoSum(int[] nums, int target) {
+     //利用hashmap，用hash 原理分解该题
        Map<Integer,Integer> mymap = new HashMap<>();
        for (int i =0;i<nums.length;i++){
+       //遍历数组，如果发现map里面有遍历的数字的配对数字，那么就得到解答，返回目前数字的index和其配对的数字的index（从map里面get(key == 数字) 得到value == index
            if (mymap.containsKey(target - nums[i])){
                return new int[]{mymap.get(target-nums[i]),i};
             }
+            //如果不是，则把这个数字放进map  put(key == 数字，value == index）
             mymap.put(nums[i],i);
        }
-
+        //最后返回一个0，表示没有得到需要的值
        return new int[0];
     }
 }
+
+
+
