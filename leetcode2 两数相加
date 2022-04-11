@@ -24,8 +24,11 @@ class Solution {
         int sum = 0;
         
         
-        //进入循环
+        //进入循环，如题目描述，这个问题可以看作是两个链表从第一位开始同位相加，并且把carry放入下一位继续相加，最后谁先结束就把剩余补0，直到两个链表都结束。
         while(l1 != null || l2 != null){
+        
+        
+        //这里注意 我们要判断的是l1 和l1 是否为 null，而不是l1.value 和l2.value 是否为null，因为一个node如果已经为null，那么node.value会报错。
             int num1 = l1 == null ? 0 : l1.val;
             int num2 = l2 == null ? 0 : l2.val;
 
@@ -34,16 +37,25 @@ class Solution {
             carry = sum / 10;
             sum = sum % 10;
 
+        //做完+操作之后，我们新建一个node作为这次同位之间相加的结果，然后让cur的next指向它。
             cur.next = new ListNode(sum);
+            
+        //再让cur指向下一个结果。
             cur = cur.next;
 
+
+        //这里因为要进行下一个同位相加，我们也要判断下l1 和 l2 是接着下一个node 还是变成 null
             l1 = l1 == null ? null : l1.next;
             l2 = l2 == null ? null : l2.next;
             
         }
+        
+        //最后如果还有进位，需要再创建一个node放这个值。
         if (carry != 0){
             cur.next = new ListNode(carry);
         }
+        
+        //最后返回最初创建的pre的下一个值就好了。
         return pre.next;
 
     }
