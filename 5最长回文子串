@@ -1,1 +1,51 @@
+// char赋值的时候 char a = ' ' ;
 
+//这里用双指针的解法，遍历整个字符串，先分别判断左边右边有没有重复的值，再判断两边有没有重复的值。
+
+
+class Solution {
+    public String longestPalindrome(String s) {
+        int[] size = new int[s.length()];
+        //注意单个字符的赋值
+        char now = ' ';
+        int left = 0;
+        int right = 0;
+        int max = 0;
+        int start = 0;
+        int end = 0;
+        for(int i = 0;i<s.length();i++){
+            now = s.charAt(i);
+            //让left 和 right往两边移动
+            left = i-1;
+            right = i+1;
+            
+            //先判断左边
+            while(left >= 0 && s.charAt(left) == now){
+                left--;
+            }
+            
+            //再判断右边
+            while(right < s.length() && s.charAt(right) == now){
+                right++;
+            }
+            
+            //最后判断两边
+            while(left>= 0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+                left--;
+                right++;
+            }
+            //这里要注意，此时的left和right已经是移动之后的index，这时候要相减再-1，不然会让值变大。
+            if((right - left) > max){
+                max = right - left - 1;
+                
+                //start和end负责定位字符串的位置。
+                start = left+1;
+                end = right -1;
+            }
+        }
+        
+        //最后返回的也要是end+1，因为substring不存最后一位。
+        return s.substring(start,end+1);
+
+    }
+}
