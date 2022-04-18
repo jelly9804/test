@@ -1,0 +1,38 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();  //array赋值注意
+        if(nums.length < 3)return result;
+        Arrays.sort(nums);   //如何sort数组
+        int sum = 0;
+        int L = 0;
+        int R = 0;
+        for(int i =0;i <nums.length;i++){
+            if(nums[i] > 0) return result;   //如果排序好的数组已经大于0，直接返回。
+            if(i>0 && nums[i] == nums[i-1])continue; //如果上一个数和下一个数是一样的，那么不用再考虑，会答案重复。
+            L = i+1;    //从i的下一个开始为左
+            R = nums.length -1 ; //最后一个为右
+            while(L<R){ //注意边界条件
+                
+                sum = (nums[i] + nums[L] + nums[R]);//注意和
+                if (sum ==0 ){    
+                    result.add(Arrays.asList(nums[i],nums[L],nums[R]));  //注意如何使用方法。
+                    while(L<R && nums[L] == nums[L+1]){   //注意边界条件，还有防止L重复
+                        L++;
+                    }
+                    while(L<R && nums[R] == nums[R-1]){   //注意边界条件，还有防止R重复
+                        R--;
+                    }
+                    L++;   //之后还要进位
+                    R--;
+                   
+                }else if (sum < 0){
+                    L++;
+                }else{
+                    R--;
+                }
+            }
+        }
+        return result;
+
+    }
+}
