@@ -1,0 +1,27 @@
+class Solution {
+    public String [] cha = {"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};   //string的赋值要注意
+    public List<String> result = new ArrayList<String>();      //list的初始化要注意
+    public void loop(String digits,List result,int index,String cur){    /loop函数用来递归
+        if(index == digits.length()){   //如果递归结束，就把值存进结果
+            result.add(cur);
+            return;
+        }
+        char now = digits.charAt(index);   //如果不是，就循环遍历index代表的字母
+        String letter = cha[now - '0' -2];
+        for(int i=0;i<letter.length();i++){
+            cur += letter.charAt(i);   //添加当前index目前的字母，然后遍历下一个index的字母
+            loop(digits,result,index+1,cur);
+            cur = cur.substring(0,cur.length()-1);   //删除最后一个字母，开始当前index的下一个字母。
+        }
+
+    }
+    public List<String> letterCombinations(String digits) {
+        if(digits.length() ==0)return result;   
+        String cur = "";
+        loop(digits,result,0,cur);  //回溯
+
+
+    return result;
+        
+    }
+}
