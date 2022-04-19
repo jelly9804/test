@@ -1,0 +1,42 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode cur = new ListNode();
+        ListNode result = new ListNode();   //做链表题目记得定义一个不会动的指针作为结果返回
+        
+        cur = head;    
+        int count = 0;
+        while(cur != null){    //因为是倒数，先计算整个链表的长度，再正面击破
+            count++;
+            cur = cur.next;
+        }
+        count = count - n;
+        if (count ==0)return head.next;   //这里需要注意，要是遇到删除正数第一个node的场景，下面的for循环会被跳过，只能在这里直接判断，如果是删除正数第一个，直接返回head的下一个node。
+        cur = head;
+        result.next = cur;
+        
+        for(int i=0;i<count-1;i++){   //要在需要删除的node的上一个node上停留，然后把这个node的next指向要删除的node的next，就这样做到删除该node
+            cur = cur.next;
+        }
+       //判断下cur.next的情况，如果是null，那么其没有next这个对象。
+        if(cur.next ==null){
+            cur.next = null;
+        }else{
+            cur.next = cur.next.next;
+        }
+        
+
+        return result.next;
+
+
+    }
+}
