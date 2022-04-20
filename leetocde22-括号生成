@@ -1,0 +1,20 @@
+class Solution {
+    public int include = 0;
+    public List<String> result = new ArrayList<>();      //这里注意array的初始化
+    public void add(int include,int n,String temp,List result){     //这个回溯函数
+        if(n == 0  && include ==0) result.add(temp);                //如果全部条件符合，就增加为结果
+        if(n ==0) return;                                           //不然就直接返回
+        if(include > 0){
+            add(include-1,n-1,temp+')',result);                     //这里不用再对temp进行操作，比如之前电话号码生成，因为有for循环，必须要砍掉最后一位之后再继续循环，这里不用
+            add(include+1,n-1,temp+'(',result);
+        }else{
+            add(include+1,n-1,temp+'(',result);
+        }
+    }
+    public List<String> generateParenthesis(int n) {
+        String temp = "";
+        add(0,n*2,temp,result);
+        return result;
+
+    }
+}
