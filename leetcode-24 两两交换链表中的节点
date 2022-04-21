@@ -1,0 +1,27 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode cur = new ListNode();   //创建一个node作为返回
+        ListNode temp = cur;
+        temp.next = head;     //需要一个node来作为变量遍历
+        while(temp.next != null && temp.next.next != null){   //如果接下来两个node都不是null
+            ListNode start = temp.next;     //先把开始和结束的node表明
+            ListNode end = temp.next.next; 
+            temp.next = end;                   //让temp的下一个指向end
+            start.next = end.next;             //start的下一个指向end的下一个
+            end.next = start;                  //end的下一个指向start
+            temp = temp.next.next;             //跳过这两个node
+        }
+        return cur.next;
+
+    }
+}
