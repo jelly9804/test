@@ -19,7 +19,7 @@ class Solution {
             temp.next = end;                   //让temp的下一个指向end
             start.next = end.next;             //start的下一个指向end的下一个
             end.next = start;                  //end的下一个指向start
-            temp = temp.next.next;             //跳过这两个node
+            temp = end.next;             //temp 应该是上一波的最后一个节点
         }
         return cur.next;
 
