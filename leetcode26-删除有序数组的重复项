@@ -1,0 +1,14 @@
+ public int removeDuplicates(int[] nums) {
+       
+        int len = 1;                            //定义一个新坐标index
+
+        for(int i=1;i<nums.length;i++){            
+            if(nums[i] != nums[i-1]){                 //如果两个数不同
+                nums[len] = nums[i];                  //把新的数增加到list
+                len++;   
+                
+            }
+        }
+        return len;
+
+    }
