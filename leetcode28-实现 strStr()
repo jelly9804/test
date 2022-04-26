@@ -39,3 +39,29 @@ class Solution {
 
     }
 }
+
+
+//另一种解法
+class Solution {
+   public int strStr(String haystack, String needle) {
+      int hlen = haystack.length();
+      int nlen = needle.length();
+      char [] hlsit = haystack.toCharArray();             //把字符串转成字符数组
+      char [] nlist = needle.toCharArray();
+
+
+      for(int i =0;i<=hlen - nlen;i++){                   //遍历每一个字符
+          int hindex = i;
+          int nindex = 0;
+          while(nindex < nlen &&   haystack.charAt(hindex) == needle.charAt(nindex)){    //如果没有越界（needle），且两个字符相同，则一直循环
+              hindex++;
+              nindex++;
+          }
+          if(nindex == nlen)return i;                          //最后如果needle循环结束，则返回答案。
+      }
+      return -1;
+
+
+
+    }
+}
