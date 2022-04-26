@@ -1,0 +1,41 @@
+class Solution {
+   public int strStr(String haystack, String needle) {
+        if(haystack.equals(needle))return 0;
+        if(haystack == "") return -1;
+        if(needle == "") return 0;
+        int index = 0;
+        int flag = -1;
+        int pre =-1;
+        for(int i=0;i<haystack.length();i++){
+            if(index == needle.length()){                                               //如果needle的所有数都存在，则返回index
+                return flag;
+            }else if(flag == -1 && haystack.charAt(i) == needle.charAt(index)){         //如果这是配对的起点，标注flag为index并且index++
+                flag = i;
+                index++;
+            }else if(flag != -1 && index < needle.length()){                             //如果已经在配对中，且没有超过needle的范围
+                if(haystack.charAt(i) != needle.charAt(index)){                          //不相等，重新配对
+                    flag = -1;
+                    index = 0;
+                    if(pre != -1){                                                      //这里注意，pre是除了配对开始的index外的另一个匹配了初始字符的index，如果这次失败，那么下一次应该从pre开始配对
+
+                    i = pre - 1;
+                }else{
+                    i = i -1;
+                }                                                                       //i = i -1 是为了防止当下这个循环刚好也是匹配了needle的第一个字符
+                    pre = -1;
+                }else{
+                    if(pre == -1 && haystack.charAt((i)) == needle.charAt(0)){               //如果还有相同的初始字符匹配，标记
+                        pre = i;
+                    }
+
+                    index++;
+                }
+            }
+        }
+        if(index == needle.length()) {                                     //如果匹配完成，返回flag
+            return flag;
+        }
+        return -1;
+
+    }
+}
