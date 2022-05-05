@@ -1,0 +1,39 @@
+//这题的解题思路就是从末尾开始找，找到第一个非降序排列的数，也就是找到第一个比后面的数小的数，这个数就是转折点。接下来要找到这个数后面的所有数中最小的数来和这个数转换，转换之后再吧这个数后面的数排序，输出就可
+
+class Solution {
+    public void nextPermutation(int[] nums) {
+        boolean flag = false;
+        for(int i=nums.length-1;i>0;i--){
+            if(nums[i] > nums[i-1]){
+                flag = true;
+                int minMax = findminMax(nums,i,nums.length);
+                swap(nums,i-1,minMax);
+                Arrays.sort(nums,i,nums.length);
+                break;
+            }
+        }
+        
+        if(!flag){
+            Arrays.sort(nums);
+        }
+       
+
+    }
+
+    public int findminMax(int[] nums,int start,int end){
+        int max = nums[start];
+        int index = start;
+        for(int i=start+1;i<end;i++){
+            if(nums[i] > nums[start-1] && nums[i]< max){
+                max = nums[i];
+                index = i;
+            }
+        }
+        return index;
+    }
+    public void swap(int[] nums,int n1,int n2){
+        int temp = nums[n1];
+        nums[n1] = nums[n2];
+        nums[n2] = temp;
+    }
+}
