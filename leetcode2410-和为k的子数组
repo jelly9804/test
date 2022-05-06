@@ -1,0 +1,28 @@
+//这题的重点是给定的是整数组，有可能存在复数，如果和2409这样的题目（只有正数）就可以用滑动窗口，因为去向是一定的。
+//那么只能结合map用前缀和的方法
+//就是用map储存每一个index的前缀和，然后循环每一个点，如果存在（sum[0-i]-k)那么就存在一段连续的子串和为k，因为sum[0-i] - (sum[0-i] - k ) = k
+//value储存的就是次数
+
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        map.put(0,1);
+        int sum = 0;
+        int result = 0;
+        for(int i=0;i<nums.length;i++){
+            sum += nums[i];               
+             if(map.containsKey(sum-k)){                  //先做判断，避免出现先把key/value装进map，之后自己匹配的情况 input =  ([1] , 0)
+                result += map.get(sum-k);
+
+            }
+            if(map.containsKey(sum)){
+                map.put(sum,map.get(sum)+1);                //如果前缀和重复出现，需要value+1 ，不然会漏掉
+            }else{
+                map.put(sum,1);                             //第一次出现就是value = 1
+            }
+           
+        }
+        return result;
+
+    }
+}
