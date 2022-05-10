@@ -1,0 +1,29 @@
+//用双指针的方法，选择每一个substring，然后再结算每个字符的count，最后再选出最大最小值
+
+
+class Solution {
+    public int beautySum(String s) {
+        int result = 0;
+        for(int i=0;i<s.length();i++){
+            for(int j = i+3;j<=s.length();j++){                     //因为至少3个字符才有意义，2个一下都是0，那么就j=i+3，记得要覆盖s.length()
+                String temp = s.substring(i,j);
+                int [] count = new int[26];
+                for(int k = 0;k < temp.length();k++){
+                    count[temp.charAt(k) - 'a']++;                  //这里注意要 - ‘a'
+                }
+                int max = 0;
+                int min = Integer.MAX_VALUE;
+                for(int k=0;k<count.length;k++){  
+                    if(count[k] > 0 && count[k] > max){
+                        max = count[k];                            
+                    }if(count[k] > 0 && count[k] < min){                        //这里记得不要用else if，不然有可能max这里截断了min的值，比如ljl这个子串。
+                        min = count[k];
+                    }
+                }
+                result += (max-min);
+            }
+        }
+        return result;
+
+    }
+}
