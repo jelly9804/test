@@ -1,0 +1,26 @@
+//这个题需要画图来看，
+可以看到最小值有两个可能性
+
+
+
+
+
+
+
+class Solution {
+    public int findMin(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        int mid = 0;
+        while(left < right){
+            mid = (left + right) / 2;              
+            if(nums[mid] > nums[right]){           //如果中间值大于右边的，最小值肯定在右边，这时候只需要取右边的值就可以
+                left = mid+1;                      //这里left要+1，不然会一直循环。
+            }else{
+                right = mid;                       //如果小于等于右边的，那么最小值肯定在这个数左边，那么right就往mid这里移动
+            }
+        }
+        return nums[left];
+
+    }
+}
