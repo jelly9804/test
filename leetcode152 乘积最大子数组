@@ -1,0 +1,27 @@
+//这题解题的关键就是要判断如果一个数为负数的时候，需要怎么找到最大值
+//我们可以设定一个最大值和最小值
+最大值要么就是i前面的所有数×i，要么就是i自己，保证连续性
+最小值也是一样
+
+
+
+class Solution {
+    public int maxProduct(int[] nums) {
+       int max = Integer.MIN_VALUE;
+       int tempmax = 1;
+       int tempmin = 1;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i] < 0){                                       //如果nums【i】小于0，那么需要暂时储存一个值，防止tempmin被上一步的tempmax马上影响。如（-4，-3，-2}
+                int temp = tempmax;
+                tempmax = Math.max(tempmin * nums[i],nums[i]);     //最大值就是由tempmin求得 负负得正
+                tempmin = Math.min(temp * nums[i],nums[i]);        //最小值由tempmax求得
+            }else{
+                tempmax = Math.max(tempmax * nums[i],nums[i]);     //正常比较
+                tempmin = Math.min(tempmin * nums[i],nums[i]);
+            }
+            max = Math.max(max,tempmax);                     
+        }
+        return max;
+
+    }
+}
