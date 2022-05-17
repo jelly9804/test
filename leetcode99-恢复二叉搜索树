@@ -1,0 +1,42 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void recoverTree(TreeNode root) {
+        List<TreeNode> list = new ArrayList<>();                    //首先创建一个list，储存中序遍历的节点
+        check(root,list);
+        int index1 = -1;                                            //因为只有两个数需要交换，这里定义两个index
+        int index2 = -1;
+        for(int i=1;i<list.size();i++){
+            if(list.get(i).val < list.get(i-1).val){                   //因为没有按顺序排的数肯定是前一个值大于后一个，这时候如果是第一次找到的数，就赋值给index1
+                if(index1 == -1)index1 = i-1;
+                else{
+                    index2 = i;                                         //第二次没有按照排序的数，index是后面一个，比如 1，2，3，7，5，6，4  需要调换的是7和4
+                }
+            }
+        }
+        if(index2 == -1)index2 = index1+1;                              //比如5，3，6，7这种情况，在index1被赋值之后，就没有下一次了，这时需要手动赋值index2
+        int temp = list.get(index1).val;
+        list.get(index1).val = list.get(index2).val;
+        list.get(index2).val = temp;
+
+    }
+    public void check(TreeNode root,List list){
+        if(root == null)return;
+        check(root.left,list);
+        list.add(root);
+        check(root.right,list);
+    }
+}
