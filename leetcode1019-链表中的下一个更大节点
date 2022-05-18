@@ -1,0 +1,32 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+ 
+ //这题while方法直接找的话会超时
+class Solution {
+    public int[] nextLargerNodes(ListNode head) {
+        List<ListNode> list = new ArrayList<>();
+        while(head != null){
+            list.add(head);                        //先把node全部存在list里面
+            head = head.next;
+        }
+        int[] result = new int[list.size()];               
+        Stack<Integer> stack = new Stack<>();                    //定义一个stack来存储
+        for(int i=0;i<list.size();i++){                            //对于每一个node
+            while(!stack.isEmpty() && list.get(stack.peek()).val < list.get(i).val ){             //如果这个node比stack里面有的top node大，那么这个数就是top node的下一个更大的节点，一直pop这些节点
+                result[stack.pop()] = list.get(i).val;                                            //stack存储的是节点的index
+
+            }
+            stack.push(i);                             //最后记得把这次的node存进stack
+        }
+        return result;              //返回结果
+
+    }
+}
