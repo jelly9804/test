@@ -1,0 +1,19 @@
+//这道题的关键就是找到简单的解法，可以通过两个for循环，依次寻找每个index对应的最大距离。
+//也可以分析一下，如果头尾两个的值不一样，就代表最长距离就是整个数组的长度-1（n-1）
+//如果一样，那么长度只可能小于n-1，有可能是n-2，
+//n-2怎么来的呢？如果从头开始的下一个index==1 和index==0不一样，那么n-2就是index==1到index=n-1的长度，
+//也有可能是index==n-1 和index==n-2不一样，也是n-2
+//那么就是需要找到一个值，可能从开头遍历，可能从结尾往前。
+
+class Solution {
+    public int maxDistance(int[] colors) {
+        int i =1;
+        int j = colors.length-1;
+        if(colors[0] != colors[colors.length - 1])return colors.length -1;
+        while(colors[i] == colors[0])i++;
+        while(colors[j] == colors[colors.length -1])j--;
+        return Math.max(colors.length-1-i,j);
+
+
+    }
+}
