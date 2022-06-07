@@ -1,0 +1,27 @@
+/这题的关键就是要找到一个方法储存从当前数开始的下一个比他大的值。
+//可以用到stack这个数据结构（之前有一题也是要计算比当前值更大的下一个值，也是用到stack
+//可以一直把小于栈顶的值push进stack
+//如果遇到比栈顶大的，那么这个就是栈顶这个值的下一个最大的值
+//此时stack储存的就是值的index，相减就是答案。把栈顶pop出来之后还可以接着确认当前的值是不是下一个栈顶的最大值
+//然后把当前值push进stack，进行下一轮测试。
+
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        int len = temperatures.length;
+        if(len ==1)return new int[]{0};
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
+        int i = 1;
+        int [] result = new int[len];
+        while(i < len){
+            if(stack.isEmpty())stack.push(i++);
+            while(i<len && temperatures[stack.peek()] >= temperatures[i]){
+                stack.push(i++);
+            }
+            int temp = stack.pop();
+            result[temp] = i - temp;        
+        }
+        result[len-1] = 0;
+        return result;
+    }
+}
