@@ -15,3 +15,22 @@ class Solution {
 
     }
 }
+
+//已知只有遍历到的当下变量n和它的前两个变量需要记忆
+//将变量控制在3个可以减少内存使用
+class Solution {
+    public int numWays(int n) {
+       
+        int a = 1;
+        int b = 1;
+        int c = 2;
+        if(n ==0)return 1;
+        if(n <= 2)return n;
+        for(int i=3;i<n+1;i++){
+            a = (b + c)%1000000007;
+            b = c;
+            c = a;
+        } 
+        return a;
+
+    }
