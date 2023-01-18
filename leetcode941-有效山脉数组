@@ -1,0 +1,42 @@
+//自己写的方法
+//先找到中间点，再确认右边是否递减
+//缺点：边界条件太多
+class Solution {
+    public boolean validMountainArray(int[] arr) {
+        int mid = -1;
+        if(arr.length ==1)return false;
+        for(int i = 0;i<arr.length-1;i++){
+            if(arr[i] > arr[i+1]){
+                if(i ==0)return false;
+                mid = i;
+                break;
+            }else if(
+                arr[i] == arr[i+1]
+            )return false;
+        }
+        if(mid == -1)return false;
+        for(int i = mid;i <arr.length-1;i++){
+            if(arr[i] <= arr[i+1])return false;
+
+        }
+        return true;
+
+    }
+}
+
+//双链表法
+  public boolean validMountainArray(int[] arr) {
+        int left = 0;
+        int right = arr.length - 1;
+        while(left < right && arr[left] < arr[left+1]){   //注意这里的判断条件，递增才++
+            left++;
+           
+           
+        }
+        while(right> left && arr[right]<arr[right-1]){  //递增才 ++
+             right--;
+        }
+        return left >0  &&right < arr.length-1  && left == right;  最后如果这个数组不是一整个递增或者递减数组，且right == left，即确实有一个顶点，就返回true。
+
+
+    }
