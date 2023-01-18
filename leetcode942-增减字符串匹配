@@ -1,0 +1,31 @@
+由范围 [0,n] 内所有整数组成的 n + 1 个整数的排列序列可以表示为长度为 n 的字符串 s ，其中:
+
+如果 perm[i] < perm[i + 1] ，那么 s[i] == 'I' 
+如果 perm[i] > perm[i + 1] ，那么 s[i] == 'D' 
+给定一个字符串 s ，重构排列 perm 并返回它。如果有多个有效排列perm，则返回其中 任何一个 。
+
+//这题需要注意一个点就是输出的列表里面不能有重复的数字。0到n每个数字都出现一遍
+//这就意味着我们需要确定每次I或D时候，要考虑到后面的I或者D带来的影响
+//可以用贪心算法
+//这么理解：如果这次是I，那么我们需要i比i+1小，只要i选择（0-n）剩余的最小的那个数，后面的肯定都比他大
+//         同理这次是D，那么需要i比i+1大，只要i选择剩余的最大的那个数，那么后面的数肯定比他小
+只需要维护一个min和max，并且注意数组最后一个数的写入即可
+
+ public int[] diStringMatch(String s) {
+        int []result = new int[s.length()+1];
+        int min = 0;
+        int max = s.length();
+        for(int i = 0;i<s.length();i++){
+            if(s.charAt(i) == 'I'){
+                result[i] = min;
+                min++;
+                if(i == s.length() -1)result[s.length()] = max;  //需要追加判断最后一个数
+            }
+            else{
+                result[i] = max;
+                max--;
+                if(i == s.length() -1)result[s.length()] = min; //需要追加判断最后一个数
+            } 
+        }
+        
+        return result;
