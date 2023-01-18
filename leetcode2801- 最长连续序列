@@ -1,0 +1,26 @@
+//这个题目可以用排序后遍历每个数，看看+1的最长长度
+//也可以用set，先把所有数储存在set里面
+//遍历每个数，当遍历到的数n ，存在n-1 在set里面，即表示过滤n-1的时候会计算上n，即n-1的最长长度就是n的最长长度，这时候我们就直接pass 过滤n的步骤
+//如果n-1不在set里面，就要过滤n，一直+1，看看最后结束在哪里
+ public int longestConsecutive(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for(int i = 0;i<nums.length;i++){
+            set.add(nums[i]);
+        }
+        int res = 0;
+        int index = 0;
+        for(int i = 0;i<nums.length;i++){
+            if(!set.contains(nums[i] - 1)){   //如果set里面存在n-1，不用进行下一步，否则进行
+                
+                while(set.contains(nums[i]+index)){   //计算n的最长长度
+                    
+                    index++;
+                }
+            }
+            res = Math.max(res,index);  //更新
+            index = 0;
+        }
+
+        return res;
+
+    }
