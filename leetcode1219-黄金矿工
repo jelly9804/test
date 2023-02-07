@@ -1,0 +1,43 @@
+//
+这题有一篇很好的思维博客
+https://leetcode.cn/problems/path-with-maximum-gold/solution/hui-su-suan-fa-tu-wen-xiang-jie-by-sdwwld/
+
+思路：
+1. 首先明确递归的终点和判断条件
+2. 明确递归函数的参数，避免多余的参数，可以复用的复用
+3.这里因为我们需要标记grid值为0的点，可以不用添加多一个数组，而是通过在递归的时候，暂时把已经参与计算的index设置为0，之后再手动设置回原来的值的方式。
+
+class Solution {
+    public int getMaximumGold(int[][] grid) {
+        int max = 0;
+        for(int i = 0; i < grid.length;i++){
+            for(int j = 0; j < grid[0].length;j++){  
+                max = Math.max(max,dfs(grid,i,j));
+            }
+        }
+        return max;
+
+    }
+
+    public int dfs(int[][]grid,int i,int j){
+        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] ==0)return 0;   //如果越界 or 值为0 or 已经走过（表现为值为0）就返回0；
+
+        int temp = grid[i][j];
+
+        grid[i][j] = 0;
+
+        int v1 = dfs(grid,i+1,j);
+        int v2 = dfs(grid,i-1,j);
+        int v3 = dfs(grid,i,j+1);
+        int v4 = dfs(grid,i,j-1);
+
+        v1 = Math.max(v1,v2);
+        v2 = Math.max(v3,v4);
+        
+        grid[i][j] = temp;
+
+        return Math.max(v1,v2) + temp;   //返回上下左右最大的那条路+原本的值。
+
+
+    }
+}
