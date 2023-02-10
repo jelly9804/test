@@ -1,0 +1,22 @@
+//这题主要在思路需要清晰
+//天际线就是每层每列的最大值，我们只需要保证最大值不变，其他楼层可以一直增加
+//用两个for循环先把每层每列的最大值用两个数组确认，之后再用for循环遍历每个数，填满层/列中最大值的最小值即为所求
+
+public int maxIncreaseKeepingSkyline(int[][] grid) {
+        int []r = new int[grid[0].length];
+        int []c = new int[grid.length];
+        for(int i = 0;i<grid.length;i++){
+            for(int j = 0;j < grid[0].length;j++){
+                r[j] = Math.max(r[j],grid[i][j]);
+                c[i] = Math.max(c[i],grid[i][j]);
+            }
+        }
+        int add = 0;
+        for(int i = 0;i<grid.length;i++){
+            for(int j = 0;j <grid[0].length;j++){
+                add += Math.min(r[j],c[i]) - grid[i][j];
+            }
+        }
+        return add;
+
+    }
